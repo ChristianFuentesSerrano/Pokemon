@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         binding.btnUpdatePokemon.setOnClickListener {
-            getPokemonList(binding.etPokemonAmount.text.toString().toInt())
+            val Pokemons = getPokemonList(binding.etPokemonAmount.text.toString().toInt())
         }
     }
 
@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         val url = "https://pokeapi.co/api/v2/pokemon/?limit=${listAmount}"
 
         val jsonRequest = JsonObjectRequest(url, Response.Listener<JSONObject>{
-            Log.i("JSONRESPONSE", it.getJSONArray("results").toString())
+            binding.rvPokemonEntries.adapter = MainAdapter(it.getJSONArray("results"))
         },
         Response.ErrorListener {
             Log.w("JSONRESPONSE", it.message as String)
